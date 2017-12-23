@@ -5,7 +5,9 @@ import {RaisedButton} from 'material-ui';
 import firebase from './firebase';
 import {browserHistory} from 'react-router';
 
-class SignUp extends React.Component{
+
+
+class Login extends React.Component{
     constructor(props){
         super(props);
         this.state={
@@ -24,31 +26,24 @@ class SignUp extends React.Component{
         console.log(`UserName: ${this.state.userName}`);
         console.log(`email: ${this.state.email}`);
         console.log(`password: ${this.state.password}`);
-        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
         .then((user)=>{
             console.log(user);
-            this.props.history.replace("/home");
+            this.props.history.push("/home");
         })
         .catch(error=>console.log(error.message));
                 
     }
-    navigateLogin = () =>{
-        this.props.history.push('/login')
+    navigateSignup = () =>{
+        this.props.history.push('/');
     }
-
     render(){
         return(
             <div>
                 <MuiThemeProvider>
                     <div style={{width:'50%', margin:'0 auto'}}>
-                        <h1>SignUp</h1>
-                        <TextField
-                            style={{paddingLeft:'70px'}}
-                            onChange={(event)=>{this.updateField('userName', event)}}
-                            value={this.state.userName}
-                            hintText="User Name"
-                            floatingLabelText="Username"
-                        /><br />
+
+                        <h1>Login</h1>
                         <TextField
                             style={{paddingLeft:'70px'}}
                             onChange={(event)=>{this.updateField('email', event)}}
@@ -66,14 +61,13 @@ class SignUp extends React.Component{
                         /><br />
                         <div style={{width:'100%', textAlign:'center'}}>
                             <RaisedButton onClick={this.submit} label="Submit" primary={true} style={{margin: '12px'}} />
-                            <RaisedButton onClick={this.navigateLogin} label="Login" primary={true} style={{margin: '12px'}} />
+                            <RaisedButton onClick={this.navigateSignup} label="SignUp" primary={true} style={{margin: '12px'}} />                    
                         </div>
                     </div>
-                    
                 </MuiThemeProvider>
             </div>
         );
     }
 }
 
-export default SignUp;
+export default Login;
